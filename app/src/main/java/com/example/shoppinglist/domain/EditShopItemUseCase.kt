@@ -4,8 +4,8 @@ class EditShopItemUseCase (
     private val repository: ShopListRepository
 ) {
 
-    fun editShopItem(shopItem: ShopItem) {
-        repository.editShopItem(shopItem)
+    fun editShopItem(newShopItem: ShopItem) {
+        repository.editShopItem(newShopItem)
     }
 
 }

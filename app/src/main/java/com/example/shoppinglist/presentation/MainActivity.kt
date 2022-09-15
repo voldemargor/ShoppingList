@@ -14,12 +14,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-//
-//        viewModel.shopList.observe(this, {
-//            it.forEach({ Log.d("mylog", it.name) })
-//        })
-//
-//        viewModel.getShopList()
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
+        viewModel.shopListLiveData.observe(this) {
+            it.forEach { Log.d("mylog", it.name) }
+        }
+
     }
 }

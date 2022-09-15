@@ -1,16 +1,19 @@
 package com.example.shoppinglist.data
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.shoppinglist.domain.ShopItem
 import com.example.shoppinglist.domain.ShopListRepository
 
 object RepositoryImpl : ShopListRepository {
 
+    private val shopListLiveData = MutableLiveData<List<ShopItem>>()
     private val shopList = mutableListOf<ShopItem>()
     private var autoincrementId = 0
 
     init {
         for (i in 0..9) {
-            shopList.add(ShopItem("Name$i", i, true))
+            addShopItem(ShopItem("Name$i", i, true))
         }
     }
 
@@ -22,16 +25,19 @@ object RepositoryImpl : ShopListRepository {
         }
 
         shopList.add(shopItem)
+
+        updateListLiveData()
     }
 
     override fun deleteShopItem(shopItem: ShopItem) {
         shopList.remove(shopItem)
+        updateListLiveData()
     }
 
-    override fun editShopItem(shopItem: ShopItem) {
-        val oldItem = getShopItem(shopItem.id)
+    override fun editShopItem(newShopItem: ShopItem) {
+        val oldItem = getShopItem(newShopItem.id)
         shopList.remove(oldItem)
-        addShopItem(shopItem)
+        addShopItem(newShopItem)
     }
 
     override fun getShopItem(itemId: Int): ShopItem {
@@ -39,8 +45,12 @@ object RepositoryImpl : ShopListRepository {
             ?: throw RuntimeException("Item with id $itemId not found")
     }
 
-    override fun getShopList(): List<ShopItem> {
-        return shopList.toList() // возвращаем копию
+    override fun getShopList(): LiveData<List<ShopItem>> {
+        return shopListLiveData
+    }
+
+    private fun updateListLiveData() {
+        shopListLiveData.value = shopList.toList() // устанавливаем копию
     }
 
 }
