@@ -13,4 +13,14 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="ShopItemText">
+        <item name="android:textSize">24dp</item>
+        <item name="android:textColor">#333333</item>
+    </style>
+
+    <style name="ShopItemTextDisabled" parent="ShopItemText">
+        <item name="android:textColor">#C8C8C8</item>
+    </style>
+
 </resources>
