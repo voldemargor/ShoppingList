@@ -8,19 +8,19 @@
     tools:context=".presentation.ShopItemActivity">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_name"
+        android:id="@+id/text_input_layout_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         app:boxBackgroundColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@id/til_count"
+        app:layout_constraintBottom_toTopOf="@id/text_input_layout_count"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_name"
+            android:id="@+id/edit_text_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Name:"
@@ -28,17 +28,17 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_count"
+        android:id="@+id/text_input_layout_count"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:boxBackgroundColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/til_name">
+        app:layout_constraintTop_toBottomOf="@id/text_input_layout_name">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_count"
+            android:id="@+id/edit_text_count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Count:"
@@ -46,7 +46,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_save"
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:text="Save"

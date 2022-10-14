@@ -1,16 +1,13 @@
 package com.example.shoppinglist.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.widget.LinearLayout
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
-import com.example.shoppinglist.domain.ShopItem
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,30 +24,36 @@ class MainActivity : AppCompatActivity() {
         viewModel.shopListLiveData.observe(this) {
             adapter.submitList(it)
         }
+
+        button_add_shop_item.setOnClickListener() {
+            startActivity(ShopItemActivity.newIntentAddItem(this))
+        }
+
     }
 
     private fun setupRecyclerView() {
-        val rvShopList = findViewById<RecyclerView>(R.id.rv_shop_list)
+//        val rvShopList = findViewById<RecyclerView>(R.id.rv_shop_list)
         adapter = ShopListAdapter()
-        rvShopList.adapter = adapter
-        rvShopList.recycledViewPool.setMaxRecycledViews(
+        rv_shop_list.adapter = adapter
+        rv_shop_list.recycledViewPool.setMaxRecycledViews(
             ShopListAdapter.VIEW_TYPE_ENABLED,
             ShopListAdapter.MAX_POOL_SIZE
         )
-        rvShopList.recycledViewPool.setMaxRecycledViews(
+        rv_shop_list.recycledViewPool.setMaxRecycledViews(
             ShopListAdapter.VIEW_TYPE_DISABLED,
             ShopListAdapter.MAX_POOL_SIZE
         )
 
         setupClickListener()
         setupLongClickListener()
-        setupSwipeListener(rvShopList)
+        setupSwipeListener(rv_shop_list)
 
     }
 
     private fun setupClickListener() {
         adapter.onShopItemClickListener = {
             Log.d("mylog", it.toString())
+            startActivity(ShopItemActivity.newIntentEditItem(this, it.id))
         }
     }
 
