@@ -20,6 +20,7 @@ class ShopItemActivity : AppCompatActivity() {
 
         parseIntent()
         startFragment()
+
 //        viewModel = ViewModelProvider(this)[ShopItemViewModel::class.java]
 //        addTextChangeListeners()
 //        observeViewModel()
