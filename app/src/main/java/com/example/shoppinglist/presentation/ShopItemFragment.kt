@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ class ShopItemFragment() : Fragment() {
     private lateinit var viewModel: ShopItemViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d("mylog", "ShopItemFragment: onCreate()")
         super.onCreate(savedInstanceState)
         parseParams()
     }

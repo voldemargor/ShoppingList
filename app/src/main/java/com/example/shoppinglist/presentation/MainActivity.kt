@@ -3,6 +3,8 @@ package com.example.shoppinglist.presentation
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -26,13 +28,31 @@ class MainActivity : AppCompatActivity() {
         }
 
         button_add_shop_item.setOnClickListener() {
-            startActivity(ShopItemActivity.newIntentAddItem(this))
-        }
 
+            if (isOnePaneMode())
+                startActivity(ShopItemActivity.newIntentAddItem(this))
+            else
+                launchFragment(ShopItemFragment.newInstanceAddItem())
+        }
     }
 
+    private fun isOnePaneMode(): Boolean {
+        val shopItemContainer = shop_item_fragment_container
+        return shopItemContainer == null
+    }
+
+    private fun launchFragment(fragment: ShopItemFragment) {
+        supportFragmentManager.popBackStack()
+        supportFragmentManager.beginTransaction()
+            .replace(shop_item_fragment_container.id, fragment)
+            // почему addToBackStack(null) и как передать имя с 21 минуты
+            // https://stepik.org/lesson/709305/step/1?unit=709868
+            .addToBackStack(null)
+            .commit()
+    }
+
+
     private fun setupRecyclerView() {
-//        val rvShopList = findViewById<RecyclerView>(R.id.rv_shop_list)
         adapter = ShopListAdapter()
         rv_shop_list.adapter = adapter
         rv_shop_list.recycledViewPool.setMaxRecycledViews(
@@ -53,7 +73,11 @@ class MainActivity : AppCompatActivity() {
     private fun setupClickListener() {
         adapter.onShopItemClickListener = {
             Log.d("mylog", it.toString())
-            startActivity(ShopItemActivity.newIntentEditItem(this, it.id))
+
+            if (isOnePaneMode())
+                startActivity(ShopItemActivity.newIntentEditItem(this, it.id))
+            else
+                launchFragment(ShopItemFragment.newInstanceEditItem(it.id))
         }
     }
 

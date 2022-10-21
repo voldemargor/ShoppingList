@@ -10,7 +10,6 @@ import kotlinx.android.synthetic.main.activity_shop_item.*
 
 class ShopItemActivity : AppCompatActivity() {
 
-    //    private lateinit var viewModel: ShopItemViewModel
     private var screenMode = MODE_UNKNOWN
     private var shopItemId = ShopItem.UNDEFINED_ID
 
@@ -19,11 +18,12 @@ class ShopItemActivity : AppCompatActivity() {
         setContentView(R.layout.activity_shop_item)
 
         parseIntent()
-        startFragment()
 
-//        viewModel = ViewModelProvider(this)[ShopItemViewModel::class.java]
-//        addTextChangeListeners()
-//        observeViewModel()
+        if (savedInstanceState == null) {
+            // Если активити не пересоздавалась
+            // https://stepik.org/lesson/709305/step/1?unit=709868 - на 18 минуте
+            startFragment()
+        }
     }
 
     private fun parseIntent() {
@@ -48,73 +48,9 @@ class ShopItemActivity : AppCompatActivity() {
             else -> throw RuntimeException("Unknown screen mode $screenMode")
         }
         supportFragmentManager.beginTransaction()
-            .add(shop_item_fragment_container.id, fragment)
+            .replace(shop_item_fragment_container.id, fragment)
             .commit()
     }
-
-//    private fun launchEditMode() {
-//        viewModel.loadShopItem(shopItemId)
-//
-//        viewModel.shopItem.observe(this) {
-//            edit_text_name.setText(it.name)
-//            edit_text_count.setText(it.count.toString())
-//        }
-//
-//        button_save.setOnClickListener() {
-//            viewModel.editShopItem(
-//                edit_text_name.text?.toString(),
-//                edit_text_count.text?.toString()
-//            )
-//        }
-//    }
-
-//    private fun launchAddMode() {
-//        button_save.setOnClickListener() {
-//            viewModel.addShopItem(edit_text_name.text?.toString(), edit_text_count.text?.toString())
-//        }
-//    }
-
-//    private fun addTextChangeListeners() {
-//        edit_text_name.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-//
-//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                viewModel.resetErrorInputName()
-//            }
-//
-//            override fun afterTextChanged(p0: Editable?) {}
-//        })
-//
-//        edit_text_count.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-//
-//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                viewModel.resetErrorInputCount()
-//            }
-//
-//            override fun afterTextChanged(p0: Editable?) {}
-//        })
-//    }
-
-//    private fun observeViewModel() {
-//        viewModel.errorInputCount.observe(this) {
-//            if (it)
-//                text_input_layout_count.error = getString(R.string.error_input_count)
-//            else
-//                text_input_layout_count.error = null
-//        }
-//
-//        viewModel.errorInputName.observe(this) {
-//            if (it)
-//                text_input_layout_name.error = getString(R.string.error_input_name)
-//            else
-//                text_input_layout_count.error = null
-//        }
-//
-//        viewModel.shouldCloseScreen.observe(this) {
-//            finish()
-//        }
-//    }
 
     companion object {
         private const val EXTRA_SCREEN_MODE = "extra_mode"
