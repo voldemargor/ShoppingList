@@ -17,6 +17,8 @@ import kotlinx.android.synthetic.main.fragment_shop_item.*
 
 class ShopItemFragment() : Fragment() {
 
+    private lateinit var onEditingFinishListener: OnEditingFinishListener
+
     private var screenMode = MODE_UNKNOWN
     private var shopItemId = ShopItem.UNDEFINED_ID
 
@@ -26,6 +28,15 @@ class ShopItemFragment() : Fragment() {
         Log.d("mylog", "ShopItemFragment: onCreate()")
         super.onCreate(savedInstanceState)
         parseParams()
+    }
+
+    override fun onAttach(context: Context) {
+        // context это активити к которой прикрепляется фрагмент
+        super.onAttach(context)
+        if (context is OnEditingFinishListener)
+            onEditingFinishListener = context
+        else
+            throw RuntimeException("Activity must implement OnEditingFinishListener")
     }
 
     override fun onCreateView(
@@ -129,8 +140,12 @@ class ShopItemFragment() : Fragment() {
         }
 
         viewModel.shouldCloseScreen.observe(viewLifecycleOwner) {
-            activity?.onBackPressed()
+            onEditingFinishListener.onEditingFinish()
         }
+    }
+
+    interface OnEditingFinishListener {
+        fun onEditingFinish()
     }
 
     companion object {

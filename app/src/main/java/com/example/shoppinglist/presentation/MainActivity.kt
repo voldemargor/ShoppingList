@@ -2,6 +2,7 @@ package com.example.shoppinglist.presentation
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
@@ -11,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishListener {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: ShopListAdapter
@@ -34,6 +35,11 @@ class MainActivity : AppCompatActivity() {
             else
                 launchFragment(ShopItemFragment.newInstanceAddItem())
         }
+    }
+
+    override fun onEditingFinish() {
+        Toast.makeText(this@MainActivity, "Saved", Toast.LENGTH_SHORT).show()
+        supportFragmentManager.popBackStack()
     }
 
     private fun isOnePaneMode(): Boolean {

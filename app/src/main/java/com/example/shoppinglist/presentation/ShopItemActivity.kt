@@ -8,7 +8,7 @@ import com.example.shoppinglist.R
 import com.example.shoppinglist.domain.ShopItem
 import kotlinx.android.synthetic.main.activity_shop_item.*
 
-class ShopItemActivity : AppCompatActivity() {
+class ShopItemActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishListener {
 
     private var screenMode = MODE_UNKNOWN
     private var shopItemId = ShopItem.UNDEFINED_ID
@@ -52,6 +52,10 @@ class ShopItemActivity : AppCompatActivity() {
             .commit()
     }
 
+    override fun onEditingFinish() {
+        finish()
+    }
+
     companion object {
         private const val EXTRA_SCREEN_MODE = "extra_mode"
         private const val EXTRA_SHOP_ITEM_ID = "extra_shop_item_id"
@@ -64,6 +68,7 @@ class ShopItemActivity : AppCompatActivity() {
             intent.putExtra(EXTRA_SCREEN_MODE, MODE_ADD)
             return intent
         }
+
 
         fun newIntentEditItem(context: Context, shopItemId: Int): Intent {
             val intent = Intent(context, ShopItemActivity::class.java)
