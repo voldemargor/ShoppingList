@@ -1,7 +1,6 @@
 package com.example.shoppinglist.presentation
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -24,13 +23,8 @@ class ShopItemFragment() : Fragment() {
 
     private lateinit var viewModel: ShopItemViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("mylog", "ShopItemFragment: onCreate()")
-        super.onCreate(savedInstanceState)
-        parseParams()
-    }
-
     override fun onAttach(context: Context) {
+        Log.d("Fragment lifecycle", "onAttach")
         // context это активити к которой прикрепляется фрагмент
         super.onAttach(context)
         if (context is OnEditingFinishListener)
@@ -39,21 +33,67 @@ class ShopItemFragment() : Fragment() {
             throw RuntimeException("Activity must implement OnEditingFinishListener")
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d("Fragment lifecycle", "onCreate")
+        super.onCreate(savedInstanceState)
+        parseParams()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        Log.d("Fragment lifecycle", "onCreateView")
 
         val view = inflater.inflate(R.layout.fragment_shop_item, container, false)
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        Log.d("Fragment lifecycle", "onViewCreated")
+
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[ShopItemViewModel::class.java]
         addTextChangeListeners()
         selectScreenMode()
         observeViewModel()
+    }
+
+    override fun onStart() {
+        Log.d("Fragment lifecycle", "onStart")
+        super.onStart()
+    }
+
+    override fun onResume() {
+        Log.d("Fragment lifecycle", "onResume")
+        super.onResume()
+    }
+
+    override fun onPause() {
+        Log.d("Fragment lifecycle", "onPause")
+        super.onPause()
+    }
+
+    override fun onStop() {
+        Log.d("Fragment lifecycle", "onStop")
+        super.onStop()
+    }
+
+    override fun onDestroyView() {
+        Log.d("Fragment lifecycle", "onDestroyView")
+        super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        Log.d("Fragment lifecycle", "onDestroy")
+        super.onDestroy()
+    }
+
+    override fun onDetach() {
+        Log.d("Fragment lifecycle", "onDetach")
+        super.onDetach()
     }
 
     private fun parseParams() {
