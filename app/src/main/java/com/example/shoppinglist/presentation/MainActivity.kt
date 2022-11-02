@@ -4,22 +4,23 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shoppinglist.R
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.shoppinglist.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishListener {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: ShopListAdapter
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setupRecyclerView()
 
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishListen
             adapter.submitList(it)
         }
 
-        button_add_shop_item.setOnClickListener() {
+        binding.buttonAddShopItem.setOnClickListener() {
 
             if (isOnePaneMode())
                 startActivity(ShopItemActivity.newIntentAddItem(this))
@@ -43,14 +44,13 @@ class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishListen
     }
 
     private fun isOnePaneMode(): Boolean {
-        val shopItemContainer = shop_item_fragment_container
-        return shopItemContainer == null
+        return binding.shopItemFragmentContainer == null
     }
 
     private fun launchFragment(fragment: ShopItemFragment) {
         supportFragmentManager.popBackStack()
         supportFragmentManager.beginTransaction()
-            .replace(shop_item_fragment_container.id, fragment)
+            .replace(binding.shopItemFragmentContainer!!.id, fragment)
             // почему addToBackStack(null) и как передать имя с 21 минуты
             // https://stepik.org/lesson/709305/step/1?unit=709868
             .addToBackStack(null)
@@ -60,19 +60,19 @@ class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishListen
 
     private fun setupRecyclerView() {
         adapter = ShopListAdapter()
-        rv_shop_list.adapter = adapter
-        rv_shop_list.recycledViewPool.setMaxRecycledViews(
+        binding.rvShopList.adapter = adapter
+        binding.rvShopList.recycledViewPool.setMaxRecycledViews(
             ShopListAdapter.VIEW_TYPE_ENABLED,
             ShopListAdapter.MAX_POOL_SIZE
         )
-        rv_shop_list.recycledViewPool.setMaxRecycledViews(
+        binding.rvShopList.recycledViewPool.setMaxRecycledViews(
             ShopListAdapter.VIEW_TYPE_DISABLED,
             ShopListAdapter.MAX_POOL_SIZE
         )
 
         setupClickListener()
         setupLongClickListener()
-        setupSwipeListener(rv_shop_list)
+        setupSwipeListener(binding.rvShopList)
 
     }
 

@@ -1,58 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="16dp"
-    tools:context=".presentation.ShopItemFragment">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_layout_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        app:boxBackgroundColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@id/text_input_layout_count"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed">
+<layout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_text_name"
-            android:layout_width="match_parent"
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.shoppinglist.presentation.ShopItemViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        tools:context=".presentation.ShopItemFragment">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout_name"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Name:"
-            android:inputType="textCapWords" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginBottom="20dp"
+            app:boxBackgroundColor="@color/white"
+            app:errorInputName="@{viewModel.errorInputName}"
+            app:layout_constraintBottom_toTopOf="@id/text_input_layout_count"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_layout_count"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:boxBackgroundColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_input_layout_name">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name:"
+                android:inputType="textCapWords"
+                android:text="@{viewModel.shopItem.name}" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_text_count"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout_count"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Count:"
-            android:inputType="number" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:boxBackgroundColor="@color/white"
+            app:errorInputCount="@{viewModel.errorInputCount}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_input_layout_name">
 
-    <Button
-        android:id="@+id/button_save"
-        android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:text="Save"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Count:"
+                android:inputType="number"
+                android:text="@{String.valueOf(viewModel.shopItem.count)}" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/button_save"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="16dp"
+            android:text="Save"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
