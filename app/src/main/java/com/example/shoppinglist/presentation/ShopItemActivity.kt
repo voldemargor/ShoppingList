@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.shoppinglist.R
 import com.example.shoppinglist.domain.ShopItem
-import kotlinx.android.synthetic.main.activity_shop_item.*
 
 class ShopItemActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishListener {
 
@@ -48,7 +47,7 @@ class ShopItemActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishLi
             else -> throw RuntimeException("Unknown screen mode $screenMode")
         }
         supportFragmentManager.beginTransaction()
-            .replace(shop_item_fragment_container.id, fragment)
+            .replace(R.id.shop_item_fragment_container, fragment)
             .commit()
     }
 
